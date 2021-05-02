@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>掲示板</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        const url = new URL(window.location.href);
+        const params = url.searchParams;
+        const id = params.get('id');
+    </script>
+  </head>
+  <body>
+    <h1>編集する🐶</h1>
+    <form id="edit" action="index.html">
+    <input type="submit" value="送信" id="send"><br>
+    </form>
+    <table>
+      <tr id="list"></tr>
+    </table>
+    
+
+ <!-- ここからJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
+    <script>
+      // データベースの参照を準備
+    var firebaseRef = new Firebase("https://first-hp-3c02e-default-rtdb.firebaseio.com"); 
+      var messagesRef = firebaseRef.child('/boad1/'+id +'/'); 
+    messagesRef.once('value', function(snapshot) { // 投稿が増えたら取得
+        var msg = snapshot.val();
+        $('<p>').html("<textarea id='text' cols='40'>"+msg.text+"</textarea></p>").prependTo('#edit');
+        // $('<tr>').html("<textarea　id='text' cols='40'>"+msg.text+"</textarea></tr>"+msg.date).prependTo('#list');
+      });
+ 
+ 
+      $('#send').click(function() {//sendがクリックされたら発火
+        // 新規メッセージを投稿
+        let date = new Date();
+        messagesRef.update({ // pushは追加
+          text: $('#text').val(),
+          date: (date.getMonth() + 1) +"/"+date.getDate()+" " + date.getHours()+":"+date.getMinutes()
+        });
+      });
+    </script>
+  <script src="/__/firebase/8.4.2/firebase-app.js"></script>
+  <script src="/__/firebase/8.4.2/firebase-analytics.js"></script>
+  <script src="/__/firebase/init.js"></script>
+  <a href="index.html" id="top">TOPに戻る</a>
+  </body>
+</html>

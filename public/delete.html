@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>掲示板</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        const url = new URL(window.location.href);
+        const params = url.searchParams;
+        const id = params.get('id');
+    </script>
+  </head>
+  <body>
+    <h1>完了しましたか？🐶</h1>
+    <table>
+      <tr id="delete"></tr>
+    </table>
+    <button id="send">完了にする</button><br><br>
+
+ <!-- ここからJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
+    <script>
+      // データベースの参照を準備
+    var firebaseRef = new Firebase("https://first-hp-3c02e-default-rtdb.firebaseio.com"); 
+      var messagesRef = firebaseRef.child('/boad1/'+id +'/'); 
+    messagesRef.once('value', function(snapshot, prevChildKey) { // 投稿が増えたら取得
+        var msg = snapshot.val();
+        $('<tr>').html("<td>" + msg.text +"</td><td>" +msg.date +   "</td>").prependTo('#delete');
+      });
+ 
+ 
+      $('#send').click(function() {//sendがクリックされたら発火
+        messagesRef.once('value', function(snapshot) { // 投稿が増えたら取得
+        var data = snapshot.val();
+        messagesRef.remove();
+        // $('<tr>').html("完了しました").prependTo('#delete');
+            window.location.href = 'index.html';
+        });
+      });
+    </script>
+  <script src="/__/firebase/8.4.2/firebase-app.js"></script>
+  <script src="/__/firebase/8.4.2/firebase-analytics.js"></script>
+  <script src="/__/firebase/init.js"></script>
+  <a href="index.html" id="top">TOPに戻る</a>
+  </body>
+</html>

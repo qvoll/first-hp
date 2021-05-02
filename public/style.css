@@ -1,0 +1,69 @@
+body {font-size: 20px;font-family: "ＭＳ ゴシック",sans-serif;}
+p {font-size: 24px;}
+div {font-size: 24px;}
+td {font-size: 80%;}
+td.aka {font-size: 120%; color:#ff0000; font-weight:bold;}
+
+a {
+    text-decoration:none;
+    font-weight:bold;
+}
+
+a:link {color: #131314; }
+a:visited {color:black }
+a:hover {color:white;}
+a:active {color: #0000ff }
+a.nasi:hover {background-color:transparent }
+
+button{
+    background-color:cornflowerblue; 
+    padding: 4px;
+    border-radius:3px;
+    margin: 4px;
+}
+button:hover{
+    background-color:rgb(94, 137, 216); 
+    padding: 4px;
+    border-radius:3px;
+}
+h1 {
+    padding: 10px;
+  }
+
+
+table{
+    margin: 10px;
+}
+td, th{
+    padding:5px;
+}
+textarea{
+    background-color:white;
+    color:black;
+    border-radius:5px;
+}
+
+#green{
+    background-color: darkcyan;
+}
+#green:hover{
+    background-color: rgb(2, 112, 112);
+}
+#text{
+    width: 200px;
+    height:24px;
+    margin: 20px;
+}
+#send{
+    color: #000;
+  background-color:rgb(255, 217, 0);
+  border-bottom: 3px solid rgb(165, 116, 42);
+}
+#send:hover{
+    color: white;
+  background-color:rgb(236, 201, 3);
+  border-bottom: 3px solid brown;
+}
+#top:hover{
+    color:#ff0000;
+}

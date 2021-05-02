@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>掲示板</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>ToDoリスト🐶</h1>
+    <div>
+      <!-- <input id="name" placeholder="名前" /> -->
+      <!-- <input id="title" placeholder="タイトル" /> -->
+      <input id="text" placeholder="やることを追加しよう!" />
+      <button id="send"><a href=''>追加</a></button>
+    </div>
+
+    <table>
+      <tr id="list"></tr>
+    </table>
+
+ <!-- ここからJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
+    <script>
+      // データベースの参照を準備
+    var firebaseRef = new Firebase("https://first-hp-3c02e-default-rtdb.firebaseio.com"); 
+      var messagesRef = firebaseRef.child('boad1'); 
+ 
+            // 既存メッセージを表示
+      messagesRef.on('child_added', function(snapshot, prevChildKey) { // 投稿が増えたら取得
+        var msg = snapshot.val();
+        $('<tr>').html("<td>やること:"+ msg.text +"</td><td>(" +msg.date +   ")</td>"+"<td><button><a href='update.html?id="+snapshot.key()+"'>編集</a></button></td>" +"<td><button id='green'><a href='delete.html?id="+snapshot.key()+"'>完了</a></button></td>"  ).prependTo('#list');
+      });
+ 
+ 
+      $('#send').click(function() {//sendがクリックされたら発火
+        // 新規メッセージを投稿
+        let date = new Date();
+        if($('#text').val().length>0){
+            messagesRef.push({ // pushは追加
+            text: $('#text').val(),
+            date: (date.getMonth() + 1) +"/"+date.getDate()+" " + date.getHours()+":"+date.getMinutes()
+            });
+        }
+        $('#send').val("");
+      });
+    </script>
+  <script src="/__/firebase/8.4.2/firebase-app.js"></script>
+  <script src="/__/firebase/8.4.2/firebase-analytics.js"></script>
+  <script src="/__/firebase/init.js"></script>
+  </body>
+</html>
